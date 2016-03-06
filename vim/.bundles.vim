@@ -1,0 +1,25 @@
+Plugin 'gmarik/vundle'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/syntastic.git'
+Plugin 'guns/xterm-color-table.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'AndrewRadev/switch.vim'
+Plugin 'AndrewRadev/sideways.vim'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+
+" JS
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'othree/javascript-libraries-syntax.vim'
+
+" CSS
+Plugin 'csscomb/vim-csscomb.git'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'gorodinskiy/vim-coloresque'
