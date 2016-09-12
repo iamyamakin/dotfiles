@@ -1,7 +1,8 @@
-alias l="ls -lAhG"
+alias l="ls -lFAhG"
 alias df="df -h"
 alias ssh="ssh -A"
 alias vi="vim"
 alias ..="cd .."
 
 alias e="vim"
+alias tmux="TERM=screen-256color-bce tmux"

@@ -1,11 +1,13 @@
 set background=dark
-if filereadable(expand("~/dotfiles/vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-    let g:solarized_termcolors=16
-    let g:solarized_termtrans=1
-    let g:solarized_contrast="high"
-    let g:solarized_visibility="high"
-    colorscheme solarized
-endif
+" if filereadable(expand("~/dotfiles/vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+"     let g:solarized_termcolors=16
+"     let g:solarized_termtrans=1
+"     let g:solarized_contrast="high"
+"     let g:solarized_visibility="high"
+"     colorscheme solarized
+" endif
+let g:hybrid_custom_term_colors = 1
+colorscheme hybrid
 
 let mapleader=","
 
@@ -139,7 +141,7 @@ let g:syntastic_enable_signs=1
 
 " Airline
 if !exists('g:airline_theme')
-    let g:airline_theme='solarized'
+    let g:airline_theme='hybrid'
 endif
 if !exists('g:airline_powerline_fonts')
     " Use the default set of separators with a few customizations
@@ -153,6 +155,7 @@ nnoremap = :SidewaysRight<cr>
 nnoremap + :Switch<cr>
 
 " Javascript libs syntax
-let g:used_javascript_libs = 'underscore,backbone,react,flux'
+let g:used_javascript_libs = 'jquery,underscore,backbone,react,flux'
+let g:jsx_ext_required = 0
 
 autocmd BufWritePre * :%s/\s\+$//e
