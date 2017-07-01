@@ -23,15 +23,6 @@ set pastetoggle=<leader>p
 
 nnoremap <silent> <space> :nohlsearch<cr>
 
-inoremap <up> <nop>
-inoremap <Down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
-
 set ruler
 set more
 set autoread
@@ -141,7 +132,7 @@ let g:syntastic_enable_signs=1
 
 " Airline
 if !exists('g:airline_theme')
-    let g:airline_theme='hybrid'
+    let g:airline_theme='hybridline'
 endif
 if !exists('g:airline_powerline_fonts')
     " Use the default set of separators with a few customizations
@@ -156,6 +147,8 @@ nnoremap + :Switch<cr>
 
 " Javascript libs syntax
 let g:used_javascript_libs = 'jquery,underscore,backbone,react,flux'
+let g:javascript_plugin_flow = 1
+let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
 
 autocmd BufWritePre * :%s/\s\+$//e
