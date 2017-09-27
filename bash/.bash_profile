@@ -7,6 +7,8 @@ export CLICOLOR=1
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 source ~/dotfiles/bash/.aliases
 source ~/dotfiles/bash/completion/git-completion.bash
+PATH=/opt/local/bin:$PATH

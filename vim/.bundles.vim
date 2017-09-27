@@ -21,6 +21,9 @@ Plugin 'FuzzyFinder'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'editorconfig/editorconfig-vim'
 
+" SYNC
+Plugin 'eshion/vim-sync'
+
 " JS
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'othree/javascript-libraries-syntax.vim'
