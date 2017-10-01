@@ -9,7 +9,6 @@ success () {
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
-  exit
 }
 lnif () {
     if [ -e $1 ]; then
@@ -22,12 +21,10 @@ type_exists () {
     fi
     return 1
 }
-formula_exists() {
+formula_exists () {
     if $(brew list $1 >/dev/null); then
-        info "%s already installed.\n" "$1"
         return 0
     fi
 
-    fail "Missing formula: $1"
     return 1
 }
