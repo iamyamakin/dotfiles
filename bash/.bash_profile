@@ -11,4 +11,12 @@ export NVM_DIR="$HOME/.nvm"
 
 source ~/dotfiles/bash/.aliases
 source ~/dotfiles/bash/completion/git-completion.bash
+source ~/dotfiles/bash/completion/git-prompt.sh
+
 PATH=/opt/local/bin:$PATH
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+
+export PS1='\u:\[\033[34m\]\W\[\033[0m\]\[\033[32m\]$(__git_ps1 "[%s]")\[\033[0m\]$ '
