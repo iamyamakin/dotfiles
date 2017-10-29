@@ -20,3 +20,5 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 
 export PS1='\u:\[\033[34m\]\W\[\033[0m\]\[\033[32m\]$(__git_ps1 "[%s]")\[\033[0m\]$ '
+
+export TERM=xterm-256color

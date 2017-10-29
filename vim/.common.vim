@@ -140,6 +140,10 @@ if !exists('g:airline_powerline_fonts')
     let g:airline_right_sep='‹' " Slightly fancier than '<'
 endif
 
+" Sync
+autocmd BufWritePost * :call SyncUploadFile()
+autocmd BufReadPre * :call SyncDownloadFile()
+
 " Sideways
 nnoremap - :SidewaysLeft<cr>
 nnoremap = :SidewaysRight<cr>

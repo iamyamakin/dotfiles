@@ -1,0 +1,10 @@
+#!/bin/sh
+
+REMOTE_HOST=""
+REMOTE_PATH=""
+
+if [ "upload" == $1 ];then
+    rsync -azcuv -e ssh `dirname $0`/$2/$3 $REMOTE_HOST:/$REMOTE_PATH/$2/$3
+elif [ 'download' == $1 ];then
+    rsync -azcuv -e ssh $REMOTE_HOST:/$REMOTE_PATH/$2/$3 `dirname $0`/$2/$3
+fi
