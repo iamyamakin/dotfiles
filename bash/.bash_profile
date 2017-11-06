@@ -6,8 +6,12 @@ export GIT_EDITOR=vim
 export CLICOLOR=1
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+if [[ -f $(which brew) && -d $(brew --prefix nvm) ]]; then
+    source $(brew --prefix nvm)/nvm.sh;
+fi
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    source $(brew --prefix)/etc/bash_completion
+fi
 
 source ~/dotfiles/bash/.aliases
 source ~/dotfiles/bash/completion/git-completion.bash
@@ -19,6 +23,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 
-export PS1='\u:\[\033[34m\]\W\[\033[0m\]\[\033[32m\]$(__git_ps1 "[%s]")\[\033[0m\]$ '
+export PS1='\u@\h:\[\033[34m\]\W\[\033[0m\]\[\033[32m\]$(__git_ps1 "[%s]")\[\033[0m\]$ '
 
 export TERM=xterm-256color
