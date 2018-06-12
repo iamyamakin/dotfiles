@@ -160,8 +160,8 @@ nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
 nmap <silent> <leader>an <Plug>(ale_next_wrap)
 
 " Sync
-autocmd BufWritePost * :call SyncUploadFile()
-autocmd BufReadPre * :call SyncDownloadFile()
+" autocmd BufWritePost * :call SyncUploadFile()
+" autocmd BufReadPre * :call SyncDownloadFile()
 
 " Sideways
 nnoremap - :SidewaysLeft<cr>
