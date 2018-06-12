@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-set rtp+=~/dotfiles/vim/bundle/vundle/
+set rtp+=~/dotfiles/vim/bundle/Vundle.vim/
 
 call vundle#begin('~/dotfiles/vim/bundle/')
 if filereadable(expand("~/dotfiles/vim/.bundles.vim"))

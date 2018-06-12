@@ -42,6 +42,8 @@ set shiftround
 set copyindent
 set preserveindent
 set virtualedit=onemore
+set splitright
+set splitbelow
 
 set scrolloff=5
 set sidescrolloff=5
@@ -127,9 +129,6 @@ if executable('ag')
     let g:ag_prg="ag --column --hidden --vimgrep"
 endif
 
-" Syntastic
-let g:syntastic_enable_signs=1
-
 " Airline
 if !exists('g:airline_theme')
     let g:airline_theme='hybridline'
@@ -139,6 +138,26 @@ if !exists('g:airline_powerline_fonts')
     let g:airline_left_sep='›'  " Slightly fancier than '>'
     let g:airline_right_sep='‹' " Slightly fancier than '<'
 endif
+let g:airline#extensions#ale#enabled = 1
+
+" Ale
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'css': ['stylelint']
+\}
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_list_window_size = 7
+let g:ale_open_list = 1
+let g:ale_set_loclist = 1
+let g:ale_set_signs = 1
+let g:ale_sign_column_always = 1
+
+nmap <leader>af :ALEFix<CR>
+nmap <leader>al :ALELint<CR>
+nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
+nmap <silent> <leader>an <Plug>(ale_next_wrap)
 
 " Sync
 autocmd BufWritePost * :call SyncUploadFile()
