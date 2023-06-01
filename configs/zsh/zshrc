@@ -1,0 +1,9 @@
+execute_configs_files() {
+    local config_file
+
+    for config_file in $DOTFILES_CONFIGS_DIR/zsh/zsh.d/*.zsh(Nn); do
+        source "${config_file}"
+    done
+}
+
+execute_configs_files
