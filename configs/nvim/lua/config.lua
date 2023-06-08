@@ -18,6 +18,7 @@ local enabled_plugins = {
     'plugins/null_ls',
     'plugins/trouble',
     'plugins/toggleterm',
+    'plugins/surround',
 }
 local enabled_lsp_servers = {
     'ansiblels',
