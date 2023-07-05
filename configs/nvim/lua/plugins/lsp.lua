@@ -2,9 +2,20 @@ local enabled_lsp_servers = require('config').enabled_lsp_servers
 
 local function after_install()
     require('mason').setup()
+
+    local lspconfig = require('lspconfig')
+    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
     require('mason-lspconfig').setup({
         automatic_installation = true,
         ensure_installed = enabled_lsp_servers,
+        handlers = {
+            function(server_name)
+                lspconfig[server_name].setup({
+                    capabilities = lsp_capabilities,
+                })
+            end,
+        },
     })
     require('lsp-status').config({
         current_function = false,
