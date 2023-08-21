@@ -30,4 +30,7 @@ source scripts/setup_python.sh
 info '--- Setup node ---'
 source scripts/setup_node.sh
 
+info '--- Setup deno ---'
+source scripts/setup_deno.sh
+
 success '--- Done ---'

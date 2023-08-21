@@ -4,16 +4,30 @@ local function after_install()
     require('mason').setup()
 
     local lspconfig = require('lspconfig')
-    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local default_opts = {
+        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    }
 
     require('mason-lspconfig').setup({
         automatic_installation = true,
         ensure_installed = enabled_lsp_servers,
         handlers = {
             function(server_name)
-                lspconfig[server_name].setup({
-                    capabilities = lsp_capabilities,
-                })
+                local opts = vim.deepcopy(default_opts)
+
+                lspconfig[server_name].setup(opts)
+            end,
+            ['denols'] = function(server_name)
+                local opts = vim.deepcopy(default_opts)
+
+                opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+                lspconfig[server_name].setup(opts)
+            end,
+            ['tsserver'] = function(server_name)
+                local opts = vim.deepcopy(default_opts)
+
+                opts.root_dir = lspconfig.util.root_pattern('package.json')
+                lspconfig[server_name].setup(opts)
             end,
         },
     })

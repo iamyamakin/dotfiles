@@ -25,6 +25,7 @@ setup_brew() {
             'amethyst'
             'autocannon'
             'cmake'
+            'deno'
             'docker'
             'firefox'
             'font-hack-nerd-font'
