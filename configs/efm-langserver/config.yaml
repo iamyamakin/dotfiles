@@ -74,8 +74,8 @@ languages:
     - <<: *shfmt
 
   css:
-    - <<: *stylelint
     - <<: *prettier
+    - <<: *stylelint
 
   dockerfile:
     - <<: *dockerfile
@@ -87,28 +87,28 @@ languages:
     - <<: *prettier
 
   javascript:
-    - <<: *eslint
     - <<: *prettier
+    - <<: *eslint
 
   javascriptreact:
-    - <<: *eslint
     - <<: *prettier
+    - <<: *eslint
 
   json:
-    - <<: *jq
     - <<: *prettier
+    - <<: *jq
 
   markdown:
-    - <<: *markdown
     - <<: *prettier
+    - <<: *markdown
 
   typescript:
-    - <<: *eslint
     - <<: *prettier
+    - <<: *eslint
 
   typescriptreact:
-    - <<: *eslint
     - <<: *prettier
+    - <<: *eslint
 
   lua:
     - <<: *luacheck
@@ -118,8 +118,8 @@ languages:
     - <<: *checkmake
 
   yaml:
-    - <<: *yamllint
     - <<: *prettier
+    - <<: *yamllint
 
   zsh:
     - <<: *shellcheck
