@@ -17,33 +17,6 @@ local function after_install()
 
                 lspconfig[server_name].setup(opts)
             end,
-            -- ['denols'] = function(server_name)
-            --     local opts = vim.deepcopy(default_opts)
-            --
-            --     opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
-            --     lspconfig[server_name].setup(opts)
-            -- end,
-            -- ['jsonls'] = function(server_name)
-            --     local opts = vim.deepcopy(default_opts)
-            --     -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-            --     --
-            --     -- capabilities.textDocument.completion.completionItem.snippetSupport = true
-            --     --
-            --     -- opts.capabilities = capabilities
-            --     opts.init_options = {
-            --         provideFormatter = false
-            --     }
-            --     -- opts.init_options = { documentFormatting = false, codeAction = false, provideFormatter = false }
-            --     -- opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
-            --     -- opts.init_options = lspconfig.util.provideFormatter = false
-            --     lspconfig[server_name].setup(opts)
-            -- end,
-            -- ['tsserver'] = function(server_name)
-            --     local opts = vim.deepcopy(default_opts)
-            --
-            --     opts.root_dir = lspconfig.util.root_pattern('package.json')
-            --     lspconfig[server_name].setup(opts)
-            -- end,
         },
     })
     require('lsp-status').config({
