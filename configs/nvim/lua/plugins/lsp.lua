@@ -17,18 +17,33 @@ local function after_install()
 
                 lspconfig[server_name].setup(opts)
             end,
-            ['denols'] = function(server_name)
-                local opts = vim.deepcopy(default_opts)
-
-                opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
-                lspconfig[server_name].setup(opts)
-            end,
-            ['tsserver'] = function(server_name)
-                local opts = vim.deepcopy(default_opts)
-
-                opts.root_dir = lspconfig.util.root_pattern('package.json')
-                lspconfig[server_name].setup(opts)
-            end,
+            -- ['denols'] = function(server_name)
+            --     local opts = vim.deepcopy(default_opts)
+            --
+            --     opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+            --     lspconfig[server_name].setup(opts)
+            -- end,
+            -- ['jsonls'] = function(server_name)
+            --     local opts = vim.deepcopy(default_opts)
+            --     -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+            --     --
+            --     -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+            --     --
+            --     -- opts.capabilities = capabilities
+            --     opts.init_options = {
+            --         provideFormatter = false
+            --     }
+            --     -- opts.init_options = { documentFormatting = false, codeAction = false, provideFormatter = false }
+            --     -- opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+            --     -- opts.init_options = lspconfig.util.provideFormatter = false
+            --     lspconfig[server_name].setup(opts)
+            -- end,
+            -- ['tsserver'] = function(server_name)
+            --     local opts = vim.deepcopy(default_opts)
+            --
+            --     opts.root_dir = lspconfig.util.root_pattern('package.json')
+            --     lspconfig[server_name].setup(opts)
+            -- end,
         },
     })
     require('lsp-status').config({
@@ -56,6 +71,7 @@ local keys = {
   l = {
     name = 'lsp',
     E = { '<cmd>lua vim.lsp.buf.declaration()<cr>', 'jumps to the declaration of the symbol under the cursor' },
+    F = { '<cmd>Format<cr>', 'format by formatter' },
     R = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'renames all references to the symbol under the cursor' },
     a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'selects a code action available at the current cursor position' },
     d = {
@@ -63,6 +79,7 @@ local keys = {
       d = { '<cmd>lua vim.diagnostic.open_float()<cr>', 'show diagnostics in a floating window' },
       e = { '<cmd>lua vim.diagnostic.goto_prev()<cr>', 'move to the previous diagnostic in the current buffer' },
       n = { '<cmd>lua vim.diagnostic.goto_next()<cr>', 'move to the next diagnostic' },
+      t = { '<cmd>lua if vim.diagnostic.is_disabled() then vim.diagnostic.enable() else vim.diagnostic.disable() end<cr>', 'toggle diagnostic' },
     },
     e = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'jumps to the definition of the symbol under the cursor' },
     f = { '<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 })<cr>', 'formats a buffer using the attached (and optionally filtered) language server clients' },

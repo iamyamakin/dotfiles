@@ -1,5 +1,7 @@
 local function after_install()
-    require("neo-tree").setup()
+    require("neo-tree").setup({
+        close_if_last_window = true,
+    })
 
     vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
 end

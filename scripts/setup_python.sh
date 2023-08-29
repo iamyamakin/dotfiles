@@ -8,6 +8,7 @@ setup_python() {
             pip3 install --user --upgrade pynvim
         fi
 
+        pip3 install --user cmakelint
         pip3 install --user pre-commit
         pip3 install --user yamllint
     else

@@ -21,7 +21,6 @@
 [[ ! -d "$XDG_DATA_HOME/zsh" ]] && mkdir -p "$XDG_DATA_HOME/zsh"
 
 lnif "$DOTFILES_CONFIGS_DIR/alacritty/alacritty.yaml" "$XDG_CONFIG_HOME/alacritty.yml"
-lnif "$DOTFILES_CONFIGS_DIR/efm-langserver/config.yaml" "$XDG_CONFIG_HOME/efm-langserver/config.yaml"
 lnif "$DOTFILES_CONFIGS_DIR/git" "$XDG_CONFIG_HOME/git"
 lnif "$DOTFILES_CONFIGS_DIR/nvim" "$XDG_CONFIG_HOME/nvim"
 lnif "$DOTFILES_CONFIGS_DIR/ripgrep/config" "$XDG_CONFIG_HOME/ripgrep/config"

@@ -5,7 +5,7 @@ setup_node() {
         info 'Installing Node.js packages...'
 
         # List of npm packages
-        local packages='eslint markdownlint-cli n prettier stylelint'
+        local packages='eslint jsonlint markdownlint-cli n prettier stylelint'
 
         # Install packages globally and quietly
         npm install $packages --global --quiet
