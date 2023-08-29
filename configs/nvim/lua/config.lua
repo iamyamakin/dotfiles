@@ -85,7 +85,7 @@ local keys = {
         n = { '<cmd>tabnext<cr>', 'next' },
         p = { '<cmd>tabprevious<cr>', 'previous' },
         t = { '<cmd>tabnew<cr>', 'new' },
-    }
+    },
 }
 
 return {

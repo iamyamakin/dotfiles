@@ -1,6 +1,4 @@
-local function after_install()
-    require('trouble').setup()
-end
+local function after_install() require('trouble').setup() end
 
 local function install(use)
     use({
@@ -11,13 +9,13 @@ end
 
 local keys = {
     T = {
-      name = 'trouble',
-      d = { '<cmd>Trouble document_diagnostics<cr>', 'document diagnostics' },
-      l = { '<cmd>Trouble loclist<cr>', 'loclist' },
-      q = { '<cmd>Trouble quickfix<cr>', 'quickfix' },
-      r = { '<cmd>Trouble lsp_references<cr>', 'references' },
-      t = { '<cmd>TroubleToggle<cr>', 'toggle' },
-      w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'workspace diagnostics' },
+        name = 'trouble',
+        d = { '<cmd>Trouble document_diagnostics<cr>', 'document diagnostics' },
+        l = { '<cmd>Trouble loclist<cr>', 'loclist' },
+        q = { '<cmd>Trouble quickfix<cr>', 'quickfix' },
+        r = { '<cmd>Trouble lsp_references<cr>', 'references' },
+        t = { '<cmd>TroubleToggle<cr>', 'toggle' },
+        w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'workspace diagnostics' },
     },
 }
 

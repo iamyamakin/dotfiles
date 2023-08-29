@@ -37,13 +37,13 @@ local function after_install()
                 require('formatter.filetypes.json').jq,
             },
             lua = {
-                require("formatter.filetypes.lua").stylua,
+                require('formatter.filetypes.lua').stylua,
             },
             markdown = {
                 prettier,
             },
             sh = {
-                require("formatter.filetypes.sh").shfmt,
+                require('formatter.filetypes.sh').shfmt,
             },
             typescript = {
                 prettier,
@@ -54,18 +54,16 @@ local function after_install()
                 eslint,
             },
             yaml = {
-                require("formatter.filetypes.yaml").yamlfmt,
+                require('formatter.filetypes.yaml').yamlfmt,
             },
             zsh = {
-                require("formatter.filetypes.sh").shfmt,
+                require('formatter.filetypes.sh').shfmt,
             },
-        }
+        },
     })
 end
 
-local function install(use)
-    use('mhartington/formatter.nvim')
-end
+local function install(use) use('mhartington/formatter.nvim') end
 
 return {
     after_install = after_install,

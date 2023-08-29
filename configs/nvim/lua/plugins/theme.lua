@@ -1,10 +1,6 @@
-local function after_install()
-    vim.cmd('colorscheme onedark')
-end
+local function after_install() vim.cmd('colorscheme onedark') end
 
-local function install(use)
-    use('olimorris/onedarkpro.nvim')
-end
+local function install(use) use('olimorris/onedarkpro.nvim') end
 
 local keys = {
     u = {

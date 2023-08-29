@@ -35,22 +35,20 @@ local function install(use)
     local layout_cmd = ''
 
     function navigation.align_equally()
-        return function()
-            vim.cmd('wincmd ' .. keys.align_equally)
-        end
+        return function() vim.cmd('wincmd ' .. keys.align_equally) end
     end
 
     function navigation.navigate(direction)
         return function()
             if keys[direction] == nil then
-                print('Unknown direction to navigate to "'..direction..'"')
+                print('Unknown direction to navigate to "' .. direction .. '"')
 
                 return nil
             end
 
             local winnr_before = vim.fn.winnr()
 
-            if pcall(vim.cmd, 'wincmd ' ..  keys[direction].vim) then
+            if pcall(vim.cmd, 'wincmd ' .. keys[direction].vim) then
                 if vim.fn.winnr() == winnr_before then
                     vim.cmd('silent ! tmux select-pane -' .. keys[direction].tmux)
                 end

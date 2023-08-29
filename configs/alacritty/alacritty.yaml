@@ -3,10 +3,8 @@ colors:
     cursor: '#ffffff'
   primary:
     background: '0x1d2021'
-
 env:
   TERM: screen-256color
-
 font:
   bold:
     family: Hack Nerd Font Mono
@@ -18,9 +16,7 @@ font:
   normal:
     family: Hack Nerd Font Mono
   size: 13.0
-
 tabspaces: 4
-
 window:
   padding:
     x: 0

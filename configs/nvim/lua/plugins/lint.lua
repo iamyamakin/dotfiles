@@ -19,11 +19,9 @@ local function install(use)
                 zsh = { 'shellcheck' },
             }
             vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
-                callback = function()
-                    require("lint").try_lint(nil, { ignore_errors = true })
-                end,
+                callback = function() require('lint').try_lint(nil, { ignore_errors = true }) end,
             })
-        end
+        end,
     })
 end
 

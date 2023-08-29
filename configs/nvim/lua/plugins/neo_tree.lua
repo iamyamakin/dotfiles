@@ -1,5 +1,5 @@
 local function after_install()
-    require("neo-tree").setup({
+    require('neo-tree').setup({
         close_if_last_window = true,
     })
 
@@ -13,7 +13,7 @@ local function install(use)
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-tree/nvim-web-devicons',
-            'MunifTanjim/nui.nvim'
+            'MunifTanjim/nui.nvim',
         },
     })
 end
@@ -25,7 +25,7 @@ local keys = {
         t = { '<cmd>Neotree toggle<cr>', 'toggle' },
         b = { '<cmd>Neotree action=show source=buffers position=right toggle=true<cr>', 'toggle buffers' },
         f = { '<cmd>Neotree reveal<cr>', 'show current file' },
-        g = { '<cmd>Neotree float git_status<cr>', 'git status' }
+        g = { '<cmd>Neotree float git_status<cr>', 'git status' },
     },
 }
 

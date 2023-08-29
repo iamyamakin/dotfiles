@@ -1,6 +1,7 @@
 # Installation
 
 Clone this repository and run commands in a shell:
+
 ```
 sh install.sh
 pre-commit install

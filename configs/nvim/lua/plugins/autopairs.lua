@@ -8,9 +8,7 @@ local function after_install()
     })
 end
 
-local function install(use)
-    use('windwp/nvim-autopairs')
-end
+local function install(use) use('windwp/nvim-autopairs') end
 
 return {
     after_install = after_install,

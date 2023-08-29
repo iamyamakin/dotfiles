@@ -1,4 +1,4 @@
-local enabled_treesitter = require('config').enabled_treesitter;
+local enabled_treesitter = require('config').enabled_treesitter
 
 local function install(use)
     use({
