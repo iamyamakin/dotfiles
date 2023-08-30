@@ -17,6 +17,18 @@ local function after_install()
 
                 lspconfig[server_name].setup(opts)
             end,
+            ['denols'] = function(server_name)
+                local opts = vim.deepcopy(default_opts)
+
+                opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+                lspconfig[server_name].setup(opts)
+            end,
+            ['tsserver'] = function(server_name)
+                local opts = vim.deepcopy(default_opts)
+
+                opts.root_dir = lspconfig.util.root_pattern('tsconfig.json', 'jsconfig.json')
+                lspconfig[server_name].setup(opts)
+            end,
         },
     })
     require('lsp-status').config({
