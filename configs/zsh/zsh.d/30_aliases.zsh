@@ -4,6 +4,7 @@ alias ll='ls -FGahl'
 alias pip='pip3'
 alias python='python3'
 
+alias e='nvim'
 alias vi='nvim'
 alias vim='nvim'
 

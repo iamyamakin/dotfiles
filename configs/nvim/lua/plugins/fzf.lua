@@ -1,5 +1,5 @@
 local function after_all()
-    vim.keymap.set('n', '<leader>w', '<leader>fsv', { desc = 'search a word', remap = true })
+    vim.keymap.set('n', '<leader>w', '<leader>fsp', { desc = 'search a word', remap = true })
     vim.keymap.set('n', '<leader>p', '<leader>ffp', { desc = 'search a path', remap = true })
 end
 
@@ -73,7 +73,7 @@ local keys = {
             c = { '<cmd>lua require("fzf-lua").grep_cword()<cr>', 'search word under cursor' },
             g = { '<cmd>lua require("fzf-lua").grep()<cr>', 'search for a pattern with grep or rg' },
             l = { '<cmd>lua require("fzf-lua").grep_last()<cr>', 'run search again with the last pattern' },
-            p = { '<cmd>lua require("fzf-lua").live_grep()<cr>', 'live grep current project' },
+            p = { '<cmd>lua require("fzf-lua").live_grep({ resume = true })<cr>', 'live grep current project' },
             v = { '<cmd>lua require("fzf-lua").grep_visual()<cr>', 'search visual selection' },
         },
     },

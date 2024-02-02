@@ -20,6 +20,7 @@ local enabled_plugins = {
     'plugins/trouble',
     'plugins/toggleterm',
     'plugins/surround',
+    'plugins/repeat',
 }
 local enabled_lsp_servers = {
     'ansiblels',
