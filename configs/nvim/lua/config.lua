@@ -21,6 +21,7 @@ local enabled_plugins = {
     'plugins/toggleterm',
     'plugins/surround',
     'plugins/repeat',
+    'plugins/multicursor',
 }
 local enabled_lsp_servers = {
     'ansiblels',
