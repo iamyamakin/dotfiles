@@ -31,15 +31,6 @@ local function after_install()
             end,
         },
     })
-    require('lsp-status').config({
-        current_function = false,
-        indicator_errors = 'E:',
-        indicator_warnings = 'W:',
-        indicator_info = 'I:',
-        indicator_hint = 'H:',
-        indicator_ok = 'Ok',
-        show_filename = false,
-    })
 end
 
 local function install(use)
@@ -49,14 +40,16 @@ local function install(use)
     })
     use('williamboman/mason-lspconfig.nvim')
     use('neovim/nvim-lspconfig')
-    use('nvim-lua/lsp-status.nvim')
 end
 
 local keys = {
     l = {
         name = 'lsp',
         E = { '<cmd>lua vim.lsp.buf.declaration()<cr>', 'jumps to the declaration of the symbol under the cursor' },
-        F = { '<cmd>Format<cr>', 'format by formatter' },
+        F = {
+            '<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 })<cr>',
+            'formats a buffer using the attached (and optionally filtered) language server clients',
+        },
         R = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'renames all references to the symbol under the cursor' },
         a = {
             '<cmd>lua vim.lsp.buf.code_action()<cr>',
@@ -73,10 +66,7 @@ local keys = {
             },
         },
         e = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'jumps to the definition of the symbol under the cursor' },
-        f = {
-            '<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 })<cr>',
-            'formats a buffer using the attached (and optionally filtered) language server clients',
-        },
+        f = { '<cmd>Format<cr>', 'format by formatter' },
         h = {
             '<cmd>lua vim.lsp.buf.hover()<cr>',
             'displays hover information about the symbol under the cursor in a floating window. Calling the function twice will jump into the floating window',
