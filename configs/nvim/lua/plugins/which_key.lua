@@ -1,27 +1,24 @@
+local keys = require('config').keys
+
 local function after_all()
-    vim.cmd([[packadd which-key.nvim]])
+    require('which-key').register(keys, { prefix = '<leader>', mode = 'n' })
+end
 
-    local which_key = require('which-key')
-    local keys = require('config').keys
+local function after_install()
+    vim.opt.timeout = true
+    vim.opt.timeoutlen = 500
 
-    which_key.register(keys, { prefix = '<leader>', mode = 'n' })
+    require('which-key').setup({
+        operators = {},
+    })
 end
 
 local function install(use)
-    use({
-        'folke/which-key.nvim',
-        config = function()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 300
-
-            require('which-key').setup({
-                operators = {},
-            })
-        end,
-    })
+    use('folke/which-key.nvim')
 end
 
 return {
     after_all = after_all,
+    after_install = after_install,
     install = install,
 }
