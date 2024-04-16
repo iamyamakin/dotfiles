@@ -5,20 +5,20 @@ local function install(use)
             local lint = require('lint')
 
             lint.linters_by_ft = lint.linters_by_ft or {}
-            lint.linters_by_ft['css'] = { 'stylelint' }
-            lint.linters_by_ft['dockerfile'] = { 'hadolint' }
-            lint.linters_by_ft['html'] = { 'tidy' }
-            lint.linters_by_ft['javascript'] = { 'eslint' }
-            lint.linters_by_ft['javascriptreact'] = { 'eslint' }
-            lint.linters_by_ft['json'] = { 'jsonlint' }
-            lint.linters_by_ft['lua'] = { 'luacheck' }
+            -- lint.linters_by_ft['css'] = { 'stylelint' }
+            -- lint.linters_by_ft['dockerfile'] = { 'hadolint' }
+            -- lint.linters_by_ft['html'] = { 'tidy' }
+            -- lint.linters_by_ft['javascript'] = { 'eslint' }
+            -- lint.linters_by_ft['javascriptreact'] = { 'eslint' }
+            -- lint.linters_by_ft['json'] = { 'jsonlint' }
+            -- lint.linters_by_ft['lua'] = { 'luacheck' }
             lint.linters_by_ft['make'] = { 'cmakelint' }
-            lint.linters_by_ft['markdown'] = { 'markdownlint' }
-            lint.linters_by_ft['sh'] = { 'shellcheck' }
-            lint.linters_by_ft['typescript'] = { 'eslint' }
-            lint.linters_by_ft['typescriptreact'] = { 'eslint' }
-            lint.linters_by_ft['yaml'] = { 'yamllint' }
-            lint.linters_by_ft['zsh'] = { 'shellcheck' }
+            -- lint.linters_by_ft['markdown'] = { 'markdownlint' }
+            -- lint.linters_by_ft['sh'] = { 'shellcheck' }
+            -- lint.linters_by_ft['typescript'] = { 'eslint' }
+            -- lint.linters_by_ft['typescriptreact'] = { 'eslint' }
+            -- lint.linters_by_ft['yaml'] = { 'yamllint' }
+            -- lint.linters_by_ft['zsh'] = { 'shellcheck' }
 
             local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 
