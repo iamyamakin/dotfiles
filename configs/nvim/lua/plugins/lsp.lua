@@ -4,33 +4,40 @@ local function after_install()
     require('mason').setup()
 
     local lspconfig = require('lspconfig')
-    local default_opts = {
-        capabilities = require('cmp_nvim_lsp').default_capabilities(),
-    }
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     require('mason-lspconfig').setup({
         automatic_installation = true,
         ensure_installed = enabled_lsp_servers,
         handlers = {
             function(server_name)
-                local opts = vim.deepcopy(default_opts)
-
-                lspconfig[server_name].setup(opts)
+                lspconfig[server_name].setup({
+                    capabilities = capabilities,
+                })
             end,
-            ['denols'] = function(server_name)
-                local opts = vim.deepcopy(default_opts)
-
-                opts.root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
-                lspconfig[server_name].setup(opts)
+            denols = function(server_name)
+                lspconfig[server_name].setup({
+                    capabilities = capabilities,
+                    root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
+                })
             end,
-            ['tsserver'] = function(server_name)
-                local opts = vim.deepcopy(default_opts)
-
-                opts.root_dir = lspconfig.util.root_pattern('tsconfig.json', 'jsconfig.json')
-                lspconfig[server_name].setup(opts)
+            tsserver = function(server_name)
+                lspconfig[server_name].setup({
+                    capabilities = capabilities,
+                    root_dir = lspconfig.util.root_pattern('tsconfig.json', 'jsconfig.json'),
+                })
             end,
         },
     })
+
+    vim.g.lspTimeoutConfig = {
+        stopTimeout = 1000 * 60 * 5,
+        startTimeout = 1000 * 5,
+        silent = false,
+        filetypes = {
+            ignore = {},
+        },
+    }
 end
 
 local function install(use)
@@ -40,6 +47,25 @@ local function install(use)
     })
     use('williamboman/mason-lspconfig.nvim')
     use('neovim/nvim-lspconfig')
+    use({
+        'hinell/lsp-timeout.nvim',
+        requires = { 'neovim/nvim-lspconfig' }
+    })
+
+    vim.diagnostic.config({
+        virtual_text = false,
+        float = {
+            source = true,
+        },
+    })
+    for _, diag in ipairs({ 'Error', 'Warn', 'Info', 'Hint' }) do
+        vim.fn.sign_define("DiagnosticSign" .. diag, {
+            text = "",
+            texthl = "DiagnosticSign" .. diag,
+            linehl = "",
+            numhl = "DiagnosticSign" .. diag,
+        })
+    end
 end
 
 local keys = {
@@ -75,7 +101,7 @@ local keys = {
             '<cmd>lua vim.lsp.buf.implementation()<cr>',
             'lists all the implementations for the symbol under the cursor in the quickfix window',
         },
-        l = { '<cmd>lua vim.diagnostic.setloclist()<cr>', 'set location list' },
+        l = { '<cmd>lua vim.diagnostic.setloclist({ wrap = true })<cr>', 'set location list' },
         r = {
             '<cmd>lua vim.lsp.buf.references()<cr>',
             'lists all the references to the symbol under the cursor in the quickfix window',
