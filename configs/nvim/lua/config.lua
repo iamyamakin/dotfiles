@@ -29,6 +29,7 @@ local enabled_lsp_servers = {
     'cssls',
     'denols',
     'dockerls',
+    'emmet_language_server',
     'eslint',
     'gopls',
     'graphql',
