@@ -31,6 +31,7 @@ setup_brew() {
             'font-hack-nerd-font'
             'fzf'
             'git'
+            'gitleaks'
             'go'
             'google-chrome'
             'hadolint'
