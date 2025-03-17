@@ -1,0 +1,5 @@
+--glob=!{.git,.cache,node_modules}
+--glob=!{dist,build}
+--glob=!*.lock
+--glob=!package-lock.json
+--smart-case

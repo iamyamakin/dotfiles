@@ -1,0 +1,17 @@
+---
+- name: Provision a development environment for the personal
+  gather_facts: true
+  gather_subset:
+    - min
+  hosts: personal
+  roles:
+    - xdg
+    - git
+    - osx
+    - brew
+    - tmux
+    - zsh
+    - nvim
+    - kitty
+    - ripgrep
+...

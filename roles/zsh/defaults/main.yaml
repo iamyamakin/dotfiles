@@ -1,0 +1,3 @@
+---
+zsh_bin: "{{ brew_prefix }}/bin/zsh"
+...

@@ -1,0 +1,25 @@
+---
+- name: Ensure kitty data directory is exist
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/kitty"
+    mode: '0700'
+    state: directory
+
+- name: Setup kitty config
+  ansible.builtin.copy:
+    src: files/kitty.conf
+    dest: "{{ xdg_config_home }}/kitty/kitty.conf"
+    mode: '0600'
+
+- name: Ensure kitty themes directory is exist
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/kitty/themes"
+    mode: '0700'
+    state: directory
+
+- name: Setup kitty themes
+  ansible.builtin.copy:
+    src: "themes/"
+    dest: "{{ xdg_config_home }}/kitty/themes/"
+    mode: '0600'
+...

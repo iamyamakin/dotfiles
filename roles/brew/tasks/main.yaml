@@ -1,0 +1,30 @@
+---
+- name: Fail if the OS is not supported
+  ansible.builtin.fail:
+    msg: "This system isn't supported, please add support."
+  when: ansible_facts['os_family'] not in ['Darwin', 'Linux']
+
+- name: Ensure homebrew is installed
+  community.general.homebrew:
+    state: present
+    update_homebrew: true
+
+- name: Install brew taps
+  community.general.homebrew_tap:
+    name: "{{ brew_packages.taps }}"
+    state: present
+  when: brew_packages.taps | length > 0
+
+- name: Install brew formulas
+  community.general.homebrew:
+    name: "{{ brew_packages.formulas }}"
+    state: present
+  when: brew_packages.formulas | length > 0
+
+- name: Install brew casks
+  community.general.homebrew_cask:
+    name: "{{ brew_packages.casks }}"
+    state: present
+  ignore_errors: true
+  when: brew_packages.casks | length > 0
+...

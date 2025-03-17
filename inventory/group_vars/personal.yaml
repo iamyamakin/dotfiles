@@ -1,0 +1,55 @@
+---
+brew_packages:
+  casks:
+    - amethyst
+    - firefox
+    - font-hack-nerd-font
+    - google-chrome
+    - kitty
+    - rar
+    - slack
+    - telegram
+    - vlc
+    - zoom
+  formulas:
+    - ansible
+    - autocannon
+    - chafa
+    - colima
+    - deno
+    - fd
+    - fzf
+    - git
+    - git-delta
+    - go
+    - htop
+    - iperf3
+    - kubernetes-cli
+    - luarocks
+    - minikube
+    - n
+    - neovim
+    - nmap
+    - prometheus
+    - pure
+    - python@3.13
+    - ripgrep
+    - rust
+    - tmux
+    - tree
+    - vale
+    - wget
+    - zsh
+    - zsh-autosuggestions
+    - zsh-completions
+  taps: []
+git_config:
+  user:
+    name: 'Alexander Yamakin'
+    email: '1650048+iamyamakin@users.noreply.github.com'
+zsh_exports:
+  - name: HOMEBREW_NO_ANALYTICS
+    value: 1
+  - name: RIPGREP_CONFIG_PATH
+    value: '$XDG_CONFIG_HOME/ripgrep/ripgreprc'
+...

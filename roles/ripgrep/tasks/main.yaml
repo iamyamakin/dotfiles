@@ -1,0 +1,13 @@
+---
+- name: Ensure ripgrep config directory is exist
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/ripgrep"
+    mode: '0700'
+    state: directory
+
+- name: Setup ripgrep config
+  ansible.builtin.copy:
+    src: files/ripgreprc
+    dest: "{{ xdg_config_home }}/ripgrep/ripgreprc"
+    mode: '0600'
+...

@@ -1,0 +1,13 @@
+---
+- name: Ensure nvim config directory is exist
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/nvim"
+    mode: '0700'
+    state: directory
+
+- name: Setup nvim.d configs
+  ansible.builtin.copy:
+    src: "nvim.d/"
+    dest: "{{ xdg_config_home }}/nvim/"
+    mode: '0600'
+...

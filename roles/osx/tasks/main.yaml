@@ -1,0 +1,94 @@
+---
+- name: Ensure command line tools are installed
+  ansible.builtin.command: xcode-select -p
+  register: osx_xcode_result
+  ignore_errors: true
+  changed_when: false
+
+- name: Install command line tools
+  ansible.builtin.command: xcode-select --install
+  when: osx_xcode_result.stdout | length == 0
+  changed_when: osx_xcode_result.rc != 0
+
+- name: Ensure screenshots directory is exists
+  ansible.builtin.file:
+    path: "{{ osx_screenshots_dir }}"
+    mode: '0700'
+    state: directory
+
+- name: Setup screenshots location
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    state: present
+    type: string
+    value: "{{ osx_screenshots_dir }}"
+  notify: Restart SystemUIServer
+
+- name: Setup .DS_Store files on network volumes
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: DSDontWriteNetworkStores
+    state: present
+    type: bool
+    value: true
+
+- name: Setup .DS_Store files on USB volumes
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: DSDontWriteUSBStores
+    state: present
+    type: bool
+    value: true
+
+- name: Setup display filename extensions
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    state: present
+    type: bool
+    value: true
+
+- name: Show hidden files
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    state: present
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: Setup require password when screen awakes
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPassword
+    state: present
+    type: int
+    value: 1
+  changed_when: false
+
+- name: Setup require password immediately after sleep or screen saver begins
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPasswordDelay
+    state: present
+    type: int
+    value: 0
+  changed_when: false
+
+- name: Setup turn off Feedback Assistant data auto-gathering
+  community.general.osx_defaults:
+    domain: com.apple.appleseed.FeedbackAssistant
+    key: Autogather
+    state: present
+    type: bool
+    value: false
+
+- name: Setup disable Personalized Ads
+  community.general.osx_defaults:
+    domain: com.apple.AdLib
+    key: allowApplePersonalizedAdvertising
+    state: present
+    type: int
+    value: 0
+...

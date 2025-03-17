@@ -1,0 +1,20 @@
+---
+- name: Ensure git directory is exist
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/git"
+    mode: '0700'
+    state: directory
+
+- name: Setup git config and ignore
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0600'
+  loop:
+    - { src: config.j2, dest: "{{ xdg_config_home }}/git/config" }
+    - { src: ignore.j2, dest: "{{ xdg_config_home }}/git/ignore" }
+
+- name: Checkout git repositories
+  ansible.builtin.include_tasks: checkout.yaml
+  when: git_repos | length > 0
+...

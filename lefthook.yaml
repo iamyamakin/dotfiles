@@ -1,0 +1,12 @@
+---
+min_version: 1.8.1
+pre-commit:
+  parallel: false
+  piped: true
+  commands:
+    lint:
+      glob: '**/*.yaml'
+      run: |
+        poetry run yamllint {staged_files}
+        poetry run ansible-lint -s {staged_files}
+...

@@ -1,0 +1,25 @@
+---
+- name: ensure xdg directories is exist
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('0700') }}"
+    state: directory
+  loop: >
+    {{
+      (
+        [
+          { "path": xdg_bin_home, "mode": "0755" },
+          { "path": xdg_cache_home },
+          { "path": xdg_config_home },
+          { "path": xdg_data_home },
+          { "path": xdg_lib_home },
+          { "path": xdg_state_home }
+        ]
+        +
+        (xdg_config_dirs | split(':') | map('trim') | map('regex_replace', '^(.*)$', '{ "path": "\1", "mode": "0755" }') | map('from_json'))
+        +
+        (xdg_data_dirs | split(':') | map('trim') | map('regex_replace', '^(.*)$', '{ "path": "\1", "mode": "0755" }') | map('from_json'))
+      )
+    }}
+  when: item.path is defined and item.path | length > 0
+...

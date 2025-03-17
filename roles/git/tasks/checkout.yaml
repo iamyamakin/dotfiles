@@ -1,0 +1,8 @@
+---
+- name: Ensure repos are checked out
+  ansible.builtin.git:
+    dest: "{{ item.dest }}"
+    repo: "{{ item.repo }}"
+    version: "{{ item.version | default('HEAD') }}"
+  loop: "{{ git_repos }}"
+...

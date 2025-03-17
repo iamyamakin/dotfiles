@@ -1,0 +1,29 @@
+export XDG_BIN_HOME="{{ xdg_bin_home }}"
+export XDG_CACHE_HOME="{{ xdg_cache_home }}"
+export XDG_CONFIG_DIRS="{{ xdg_config_dirs }}"
+export XDG_CONFIG_HOME="{{ xdg_config_home }}"
+export XDG_DATA_DIRS="{{ xdg_data_dirs }}"
+export XDG_DATA_HOME="{{ xdg_data_home }}"
+export XDG_LIB_HOME="{{ xdg_lib_home }}"
+export XDG_STATE_HOME="{{ xdg_state_home }}"
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+export LANG='en_US.UTF-8'
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+export GPG_TTY="$(tty)"
+
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
+export HISTSIZE='10000'
+export SAVEHIST='10000'
+
+{% for zsh_export in zsh_exports %}
+{% if zsh_export.value is string %}
+export {{ zsh_export.name }}={{ zsh_export.value }}
+{% elif zsh_export.value is sequence %}
+export {{ zsh_export.name }}={{ zsh_export.value | join(':') }}
+{% endif %}
+{% endfor %}
