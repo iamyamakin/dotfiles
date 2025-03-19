@@ -431,14 +431,14 @@ referencing = ">=0.31.0"
 
 [[package]]
 name = "lefthook"
-version = "1.10.11"
+version = "1.11.3"
 description = "Git hooks manager. Fast, powerful, simple."
 optional = false
 python-versions = ">=3.6"
 groups = ["dev"]
 files = [
-    {file = "lefthook-1.10.11-py3-none-any.whl", hash = "sha256:a3725a0bfa056c54cdb9c36fd531e20ba8a80de35599dd14922028ab5bcbd7fb"},
-    {file = "lefthook-1.10.11.tar.gz", hash = "sha256:33a91ce1fd4f222ba5095d9106695a99af408cdfb6164b2e3b0150a8a9081f1d"},
+    {file = "lefthook-1.11.3-py3-none-any.whl", hash = "sha256:ab93b75ba936f19a194b1998725e7e4c59c8469da42c496d1a47231e72e96265"},
+    {file = "lefthook-1.11.3.tar.gz", hash = "sha256:5520fc669072c81d3ab103608d1bea39aa901f81eba08e069485599de5362415"},
 ]
 
 [[package]]
@@ -877,4 +877,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.13"
-content-hash = "4629a70f6adabf0d19f174fa4cecb8e931d19bcf30c528e2ad1b0e54342225b7"
+content-hash = "bcf4a2db81769c08d5b2f16f6a3416fc3b831325b023129533ee63373dcf7e70"

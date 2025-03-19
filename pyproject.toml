@@ -1,6 +1,5 @@
-license = "MIT"
-
 [tool.poetry]
+license = "MIT"
 package-mode = false
 
 [tool.poetry.dependencies]
@@ -9,5 +8,5 @@ ansible = "~11.2"
 
 [tool.poetry.group.dev.dependencies]
 ansible-lint = "~25.1"
-lefthook = "~1.10"
+lefthook = "~1.11"
 yamllint = "~1.35"

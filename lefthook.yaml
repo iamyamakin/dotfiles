@@ -1,5 +1,5 @@
 ---
-min_version: 1.8.1
+min_version: 1.11.3
 pre-commit:
   parallel: false
   piped: true
