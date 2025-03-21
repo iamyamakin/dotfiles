@@ -25,6 +25,9 @@
   community.general.homebrew_cask:
     name: "{{ brew_packages.casks }}"
     state: present
-  ignore_errors: true
+  register: cask_result
+  failed_when:
+    - cask_result is failed
+    - "'there is already an App' not in cask_result.msg | default('')"
   when: brew_packages.casks | length > 0
 ...
