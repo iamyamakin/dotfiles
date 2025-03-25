@@ -22,8 +22,8 @@ export SAVEHIST='10000'
 
 {% for zsh_export in zsh_exports %}
 {% if zsh_export.value is string %}
-export {{ zsh_export.name }}={{ zsh_export.value }}
+export {{ zsh_export.name }}="{{ zsh_export.value }}"
 {% elif zsh_export.value is sequence %}
-export {{ zsh_export.name }}={{ zsh_export.value | join(':') }}
+export {{ zsh_export.name }}="{{ zsh_export.value | join(':') }}"
 {% endif %}
 {% endfor %}

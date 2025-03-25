@@ -21,7 +21,7 @@ bind -n c-h run "(tmux display-message -p '#{pane_current_command}' | grep -iq v
 bind -n c-j run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys c-j) || tmux select-pane -D"
 bind -n c-k run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys c-k) || tmux select-pane -U"
 bind -n c-l run "(tmux display-message -p '#{pane_current_command}' | grep -iq vim && tmux send-keys c-l) || tmux select-pane -R"
-bind -n c-\ send-keys c-\\
+bind -n c-\\ send-keys c-\\
 
 set -g message-command-style 'fg=#89ca78,bg=#181818'
 set -g message-style 'fg=#89ca78,bg=#181818'

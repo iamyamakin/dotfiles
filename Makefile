@@ -7,6 +7,18 @@ tty_red = $(call tty_mkbold,31)
 tty_reset = $(call tty_escape,0)
 tty_underline = $(call tty_escape,4;39)
 
+export XDG_BIN_HOME ?= $(HOME)/.local/bin
+export XDG_CACHE_HOME ?= $(HOME)/.cache
+export XDG_CONFIG_DIRS ?= /etc/xdg
+export XDG_CONFIG_HOME ?= $(HOME)/.config
+export XDG_DATA_DIRS ?= /usr/local/share/:/usr/share/
+export XDG_DATA_HOME ?= $(HOME)/.local/share
+export XDG_LIB_HOME ?= $(HOME)/.local/lib
+export XDG_STATE_HOME ?= $(HOME)/.local/state
+
+XDG_DIRS := $(XDG_BIN_HOME) $(XDG_CACHE_HOME) $(subst :, , $(XDG_CONFIG_DIRS)) $(XDG_CONFIG_HOME) $(XDG_DATA_HOME) $(XDG_LIB_HOME) $(XDG_STATE_HOME)
+XDG_DATA_DIRS_SEPARATED := $(subst :, , $(XDG_DATA_DIRS))
+
 UNAME_S := $(shell uname -s)
 UNAME_M := $(shell uname -m)
 PARENT_SHELL := $(shell echo $$SHELL)
@@ -17,9 +29,10 @@ ifeq ($(UNAME_S), Linux)
 	ifeq ($(findstring bash, $(PARENT_SHELL)), bash)
 		shell_rcfile := $$HOME/.bashrc
 	else ifeq ($(findstring zsh, $(PARENT_SHELL)), zsh)
-		shell_rcfile := $(shell echo $${ZDOTDIR:-$${HOME}}/.zshrc)
+		shell_rcfile := $(shell echo $${HOME}/.zshrc)
 	else
-		shell_rcfile := $(shell echo $${ENV:-$${HOME}}/.profile)
+		@echo "$(tty_red)...$(tty_reset) $(tty_bold)Supported only bash or zsh$(tty_reset)"
+		exit 1
 	endif
 else ifeq ($(UNAME_S), Darwin)
 	ifeq ($(UNAME_M), arm64)
@@ -30,31 +43,24 @@ else ifeq ($(UNAME_S), Darwin)
 	ifeq ($(findstring bash, $(PARENT_SHELL)), bash)
 		shell_rcfile := $$HOME/.bash_profile
 	else ifeq ($(findstring zsh, $(PARENT_SHELL)), zsh)
-		shell_rcfile := $(shell echo $${ZDOTDIR:-$${HOME}}/.zprofile)
+		shell_rcfile := $(shell echo $${HOME}/.zprofile)
 	else
-		shell_rcfile := $(shell echo $${ENV:-$${HOME}}/.profile)
+		@echo "$(tty_red)...$(tty_reset) $(tty_bold)Supported only bash or zsh$(tty_reset)"
+		exit 1
 	endif
 else
 	@echo "$(tty_red)...$(tty_reset) $(tty_bold)Supported only macOS$(tty_reset)"
 	exit 1
 endif
 
-export XDG_BIN_HOME ?= $(HOME)/.local/bin
-export XDG_CACHE_HOME ?= $(HOME)/.cache
-export XDG_CONFIG_DIRS ?= /etc/xdg
-export XDG_CONFIG_HOME ?= $(HOME)/.config
-export XDG_DATA_DIRS ?= /usr/local/share/:/usr/share/
-export XDG_DATA_HOME ?= $(HOME)/.local/share
-export XDG_LIB_HOME ?= $(HOME)/.local/lib
-export XDG_STATE_HOME ?= $(HOME)/.local/state
-
-XDG_DIRS := $(XDG_BIN_HOME) $(XDG_CACHE_HOME) $(subst :, , $(XDG_CONFIG_DIRS)) $(XDG_CONFIG_HOME) $(subst :, , $(XDG_DATA_DIRS)) $(XDG_DATA_HOME) $(XDG_LIB_HOME) $(XDG_STATE_HOME)
-
 .PHONY: xdg-dirs
-xdg-dirs: $(XDG_DIRS)
+xdg-dirs: $(XDG_DIRS) $(XDG_DATA_DIRS_SEPARATED)
 
 $(XDG_DIRS):
 	mkdir -p $@
+
+$(XDG_DATA_DIRS_SEPARATED):
+	sudo mkdir -p $@
 
 .PHONE: xcode-install
 xcode-install: xdg-dirs
@@ -112,7 +118,11 @@ poetry-install-dependencies: poetry-install
 
 .PHONY: personal-install
 personal-install:
-	@$(POETRY) run ansible-playbook -e ansible_python_interpreter=$(PYTHON) -e HOMEBREW_PREFIX=$(HOMEBREW_PREFIX) playbooks/personal.yaml -K
+	@$(POETRY) run ansible-playbook \
+		-e ansible_python_interpreter=$(PYTHON) \
+		-e HOMEBREW_PREFIX=$(HOMEBREW_PREFIX) \
+		-e desired_state=present \
+		playbooks/personal.yaml -K
 
 .PHONY: install
 install: poetry-install-dependencies personal-install
@@ -120,7 +130,11 @@ install: poetry-install-dependencies personal-install
 
 .PHONY: uninstall
 uninstall:
-	# Always WIP
+	@$(POETRY) run ansible-playbook \
+		-e ansible_python_interpreter=$(PYTHON) \
+		-e HOMEBREW_PREFIX=$(HOMEBREW_PREFIX) \
+		-e desired_state=absent \
+		playbooks/personal.yaml -K
 	@if (test -x $(HOMEBREW)); then \
 		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"; \
 	fi

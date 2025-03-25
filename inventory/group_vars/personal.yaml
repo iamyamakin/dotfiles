@@ -21,6 +21,7 @@ brew_packages:
     - fzf
     - git
     - git-delta
+    - gnupg
     - go
     - htop
     - iperf3
@@ -51,6 +52,8 @@ git_config:
 zsh_exports:
   - name: HOMEBREW_NO_ANALYTICS
     value: 1
+  - name: N_PREFIX
+    value: '$XDG_DATA_HOME/n'
   - name: RIPGREP_CONFIG_PATH
     value: '$XDG_CONFIG_HOME/ripgrep/ripgreprc'
 ...

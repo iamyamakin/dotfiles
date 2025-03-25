@@ -1,5 +1,5 @@
 ---
-- name: ensure xdg directories is exist
+- name: Ensure xdg directories is exist
   ansible.builtin.file:
     path: "{{ item.path }}"
     mode: "{{ item.mode | default('0700') }}"
@@ -21,5 +21,5 @@
         (xdg_data_dirs | split(':') | map('trim') | map('regex_replace', '^(.*)$', '{ "path": "\1", "mode": "0755" }') | map('from_json'))
       )
     }}
-  when: item.path is defined and item.path | length > 0
+  when: desired_state == 'present' and item.path is defined and item.path | length > 0
 ...

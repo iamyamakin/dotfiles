@@ -4,10 +4,18 @@
     path: "{{ xdg_config_home }}/ripgrep"
     mode: '0700'
     state: directory
+  when: desired_state == 'present'
+
+- name: Remove ripgrep config directory
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/ripgrep"
+    state: absent
+  when: desired_state == 'absent'
 
 - name: Setup ripgrep config
   ansible.builtin.copy:
     src: files/ripgreprc
     dest: "{{ xdg_config_home }}/ripgrep/ripgreprc"
     mode: '0600'
+  when: desired_state == 'present'
 ...

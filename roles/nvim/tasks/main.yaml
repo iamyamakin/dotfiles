@@ -4,10 +4,18 @@
     path: "{{ xdg_config_home }}/nvim"
     mode: '0700'
     state: directory
+  when: desired_state == 'present'
+
+- name: Remove nvim config directory
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/nvim"
+    state: absent
+  when: desired_state == 'absent'
 
 - name: Setup nvim.d configs
   ansible.builtin.copy:
     src: "nvim.d/"
     dest: "{{ xdg_config_home }}/nvim/"
     mode: '0600'
+  when: desired_state == 'present'
 ...

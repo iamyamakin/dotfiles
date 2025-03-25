@@ -7,4 +7,5 @@
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+.ansible
 configs/nvim/plugin

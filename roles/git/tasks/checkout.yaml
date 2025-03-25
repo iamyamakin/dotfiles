@@ -5,4 +5,12 @@
     repo: "{{ item.repo }}"
     version: "{{ item.version | default('HEAD') }}"
   loop: "{{ git_repos }}"
+  when: desired_state == 'present'
+
+- name: Remove repos
+  ansible.builtin.file:
+    path: "{{ item.dest }}"
+    state: absent
+  loop: "{{ git_repos }}"
+  when: desired_state == 'absent'
 ...

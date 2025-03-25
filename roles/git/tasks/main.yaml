@@ -4,6 +4,7 @@
     path: "{{ xdg_config_home }}/git"
     mode: '0700'
     state: directory
+  when: desired_state == 'present'
 
 - name: Setup git config and ignore
   ansible.builtin.template:
@@ -13,8 +14,15 @@
   loop:
     - { src: config.j2, dest: "{{ xdg_config_home }}/git/config" }
     - { src: ignore.j2, dest: "{{ xdg_config_home }}/git/ignore" }
+  when: desired_state == 'present'
 
 - name: Checkout git repositories
   ansible.builtin.include_tasks: checkout.yaml
   when: git_repos | length > 0
+
+- name: Remove git directory
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/git"
+    state: absent
+  when: desired_state == 'absent'
 ...
