@@ -98,19 +98,6 @@ local function get_config(server)
     return rawget(require('lspconfig.configs'), server)
 end
 
-local function disable(server, condition)
-    local util = require('lspconfig.util')
-    local config = get_config(server)
-
-    config.document_config.on_new_config = util.add_hook_before(
-        config.document_config.on_new_config,
-        function(new_config, new_root_dir)
-            if condition(new_root_dir, new_config) then
-                new_config.enabled = false
-            end
-    end)
-end
-
 local function is_enabled(server)
     local config = get_config(server)
 
@@ -184,7 +171,6 @@ end
 
 return {
     action = action,
-    disable = disable,
     format = format,
     formatter = formatter,
     execute = execute,

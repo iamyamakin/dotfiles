@@ -4,6 +4,7 @@ return {
         optional = true,
         opts = {
             ensure_installed = {
+                'biome',
                 'prettier',
             },
         },
@@ -13,8 +14,8 @@ return {
         optional = true,
         opts = {
             formatters_by_ft = {
-                javascript = { 'prettier' },
-                javascriptreact = { 'prettier' },
+                javascript = { 'biome', 'prettier' },
+                javascriptreact = { 'biome', 'prettier' },
             },
         },
     },

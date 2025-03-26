@@ -4,6 +4,7 @@ return {
         optional = true,
         opts = {
             ensure_installed = {
+                'biome',
                 'prettier',
             },
         },
@@ -23,7 +24,7 @@ return {
         optional = true,
         opts = {
             formatters_by_ft = {
-                css = { 'prettier' },
+                css = { 'biome', 'prettier' },
                 less = { 'prettier' },
                 scss = { 'prettier' },
             },
