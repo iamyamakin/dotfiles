@@ -26,7 +26,7 @@ has_parser = GlobalUtils.memoize(has_parser)
 
 return {
     {
-        'williamboman/mason.nvim',
+        'mason-org/mason.nvim',
         optional = true,
         opts = {
             ensure_installed = {

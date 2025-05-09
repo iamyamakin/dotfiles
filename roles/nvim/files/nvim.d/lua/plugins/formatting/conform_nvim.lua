@@ -2,7 +2,7 @@ return {
     'stevearc/conform.nvim',
     cmd = 'ConformInfo',
     event = 'BufWritePre',
-    dependencies = { 'williamboman/mason.nvim' },
+    dependencies = { 'mason-org/mason.nvim' },
     lazy = true,
     opts = {
         default_format_opts = {

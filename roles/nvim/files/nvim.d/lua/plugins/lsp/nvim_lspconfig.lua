@@ -2,8 +2,8 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     dependencies = {
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
+        'mason-org/mason.nvim',
+        'mason-org/mason-lspconfig.nvim',
     },
     opts = {
         diagnostics = {
@@ -136,7 +136,8 @@ return {
             require('lspconfig')[server].setup(server_opts)
         end
 
-        local all_servers = vim.tbl_keys(require('mason-lspconfig.mappings.server').lspconfig_to_package)
+        local all_servers = vim.tbl_keys(require('mason-lspconfig').get_mappings().lspconfig_to_package)
+
         local ensure_installed = {}
 
         for server, server_opts in pairs(servers) do

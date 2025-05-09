@@ -3,7 +3,7 @@ return {
         'b0o/schemastore.nvim',
     },
     {
-        'williamboman/mason.nvim',
+        'mason-org/mason.nvim',
         optional = true,
         opts = {
             ensure_installed = {
