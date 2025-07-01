@@ -1,5 +1,5 @@
 return {
-    'echasnovski/mini-git',
+    'nvim-mini/mini-git',
     main = "mini.git",
     version = '*',
     event = 'VeryLazy',
@@ -26,5 +26,15 @@ return {
         vim.api.nvim_create_autocmd('User', au_opts)
 
         require('mini.git').setup(opts)
-    end
+    end,
+    keys = {
+        {
+            '<leader>gr',
+            function()
+                require('mini.git').show_at_cursor()
+            end,
+            desc = 'Git show_at_cursor',
+            mode = { 'n', 'x' }
+        },
+    },
 }

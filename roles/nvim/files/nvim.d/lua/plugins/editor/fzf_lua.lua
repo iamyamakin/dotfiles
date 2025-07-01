@@ -51,7 +51,7 @@ return {
         'ibhagwan/fzf-lua',
         event = 'VeryLazy',
         cmd = 'FzfLua',
-        dependencies = { 'echasnovski/mini.icons' },
+        dependencies = { 'nvim-mini/mini.icons' },
         opts = function()
             local fzf = require('fzf-lua')
             local actions = fzf.actions
@@ -98,6 +98,7 @@ return {
                             ['gif'] = img_previewer,
                             ['webp'] = img_previewer,
                         },
+                        ueberzug_scaler = 'fit_contain',
                     },
                 },
                 files = {
@@ -169,8 +170,8 @@ return {
             { '<leader>sq', '<cmd>FzfLua quickfix<cr>', desc = 'Quickfix List' },
             { '<leader>sw', GlobalUtils.pick('grep_cword'), desc = 'Word (Root Dir)' },
             { '<leader>sW', GlobalUtils.pick('grep_cword', { root = false }), desc = 'Word (cwd)' },
-            { '<leader>sw', GlobalUtils.pick('grep_visual'), mode = 'v', desc = 'Selection (Root Dir)' },
-            { '<leader>sW', GlobalUtils.pick('grep_visual', { root = false }), mode = 'v', desc = 'Selection (cwd)' },
+            { '<leader>sw', GlobalUtils.pick('grep_visual'), mode = 'x', desc = 'Selection (Root Dir)' },
+            { '<leader>sW', GlobalUtils.pick('grep_visual', { root = false }), mode = 'x', desc = 'Selection (cwd)' },
             { '<leader>uC', GlobalUtils.pick('colorschemes'), desc = 'Colorscheme with Preview' },
             {
                 '<leader>ss',

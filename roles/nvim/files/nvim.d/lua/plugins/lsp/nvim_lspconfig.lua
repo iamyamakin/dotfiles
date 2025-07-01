@@ -9,19 +9,6 @@ return {
         diagnostics = {
             underline = true,
             update_in_insert = false,
-            virtual_text = {
-                spacing = 4,
-                source = 'if_many',
-                prefix = function(diagnostic)
-                    local icons = GlobalUtils.icons.diagnostics
-
-                    for d, icon in pairs(icons) do
-                        if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-                            return icon
-                        end
-                    end
-                end,
-            },
             severity_sort = true,
             signs = {
                 text = {
@@ -84,6 +71,14 @@ return {
         GlobalUtils.lsp.setup()
         GlobalUtils.lsp.on_dynamic_capability(require('plugins.lsp.keymaps').on_attach)
 
+        vim.api.nvim_create_user_command(
+            'LspClientToggle',
+            function(cmd_opts)
+                GlobalUtils.lsp.toggle_client(cmd_opts.args)
+            end,
+            { nargs = 1, complete = function() return require('mason-lspconfig').get_installed_servers() end }
+        )
+
         if opts.inlay_hints.enabled then
             GlobalUtils.lsp.on_supports_method('textDocument/inlayHint', function(_, buffer)
                 if
@@ -133,11 +128,10 @@ return {
             elseif opts.setup['*'] and opts.setup['*'](server, server_opts) then
                 return
             end
-            require('lspconfig')[server].setup(server_opts)
+            vim.lsp.config(server, server_opts)
         end
 
         local all_servers = vim.tbl_keys(require('mason-lspconfig').get_mappings().lspconfig_to_package)
-
         local ensure_installed = {}
 
         for server, server_opts in pairs(servers) do
@@ -153,7 +147,7 @@ return {
             end
         end
         require('mason-lspconfig').setup({
-            automatic_installation = false,
+            automatic_enable = true,
             ensure_installed = vim.tbl_deep_extend(
                 'force',
                 ensure_installed,

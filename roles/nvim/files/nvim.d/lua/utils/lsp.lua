@@ -20,7 +20,7 @@ local function check_methods(client, buffer)
     for method, clients in pairs(supports_method) do
         clients[client] = clients[client] or {}
         if not clients[client][buffer] then
-            if client.supports_method and client.supports_method(method, { bufnr = buffer }) then
+            if client:supports_method(method, { bufnr = buffer }) then
                 clients[client][buffer] = true
                 vim.api.nvim_exec_autocmds('User', {
                     pattern = 'LspSupportsMethod',
@@ -83,8 +83,8 @@ local function formatter(opts)
         sources = function(buf)
             local clients = get_clients(GlobalUtils.merge({}, filter, { bufnr = buf }))
             local result = vim.tbl_filter(function(client)
-                return client.supports_method('textDocument/formatting')
-                or client.supports_method('textDocument/rangeFormatting')
+                return client:supports_method('textDocument/formatting')
+                or client:supports_method('textDocument/rangeFormatting')
             end, clients)
 
             return vim.tbl_map(function(client) return client.name end, result)
@@ -169,6 +169,22 @@ local function setup()
     on_dynamic_capability(check_methods)
 end
 
+local function toggle_client(name)
+    if vim.lsp.config[name] == nil then return end
+
+    local found = false
+
+    for _, client in pairs(vim.lsp.get_clients({ name = name })) do
+        found = true
+        client:stop(true)
+        vim.notify(client.name .. ': stopped')
+        -- vim.lsp.stop_client(client.id, true)
+    end
+    if not found then
+        -- vim.lsp.start(vim.lsp.config[name])
+    end
+end
+
 return {
     action = action,
     format = format,
@@ -181,5 +197,6 @@ return {
     on_dynamic_capability = on_dynamic_capability,
     on_supports_method = on_supports_method,
     setup = setup,
+    toggle_client = toggle_client,
 }
 

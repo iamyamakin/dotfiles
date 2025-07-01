@@ -43,6 +43,7 @@ return {
                     { GlobalUtils.lualine.pretty_path() },
                 },
                 lualine_x = {
+                    Snacks.profiler.status(),
                     {
                         function() return require('noice').api.status.command.get() end,
                         cond = function()
@@ -66,6 +67,22 @@ return {
                         require('lazy.status').updates,
                         cond = require('lazy.status').has_updates,
                         color = function() return { fg = GlobalUtils.color('Special') } end,
+                    },
+                    {
+                        'lsp_status',
+                        icon = '', -- f013
+                        symbols = {
+                            -- Standard unicode symbols to cycle through for LSP progress:
+                            spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                            -- Standard unicode symbol for when LSP is done:
+                            done = '✓',
+                            -- Delimiter inserted between LSP names:
+                            separator = ' ',
+                        },
+                        -- List of LSP names to ignore (e.g., `null-ls`):
+                        ignore_lsp = {},
+                        -- Display the LSP name
+                        show_name = true,
                     },
                     {
                         'diff',

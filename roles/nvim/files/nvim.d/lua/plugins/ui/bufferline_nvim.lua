@@ -23,6 +23,9 @@ return {
                     highlight = 'Directory',
                     text_align = 'left',
                 },
+                {
+                    filetype = "snacks_layout_box",
+                },
             },
             right_mouse_command = function(n) Snacks.bufdelete(n) end,
         },

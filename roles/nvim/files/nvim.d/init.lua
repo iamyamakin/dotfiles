@@ -64,6 +64,7 @@ require('lazy').setup({
         { import = 'plugins.langs' },
         { import = 'plugins.ui' },
         { import = 'plugins.misc' },
+        { import = 'plugins.ai' },
     },
     install = { colorscheme = { 'onedark_dark' } },
 })

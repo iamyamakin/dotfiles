@@ -17,6 +17,8 @@ brew_packages:
     - chafa
     - colima
     - deno
+    - docker
+    - docker-compose
     - fd
     - fzf
     - git
@@ -24,8 +26,11 @@ brew_packages:
     - gnupg
     - go
     - htop
+    - imagemagick
     - iperf3
     - kubernetes-cli
+    - lefthook
+    - llama.cpp
     - luarocks
     - minikube
     - n

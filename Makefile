@@ -94,7 +94,7 @@ brew-install: xcode-install
 	fi
 
 PIPX := $(HOMEBREW_PREFIX)/bin/pipx
-PYTHON := $(HOMEBREW_PREFIX)/bin/python3
+PYTHON := $(HOMEBREW_PREFIX)/bin/python3.13
 POETRY := $(XDG_BIN_HOME)/poetry
 
 .PHONY: poetry-install

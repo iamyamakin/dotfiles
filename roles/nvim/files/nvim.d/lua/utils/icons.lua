@@ -13,6 +13,8 @@ return {
         LogPoint = ".>",
     },
     ft = {
+        ["markdown.gh"] = "",
+        gh = "",
         octo = "",
     },
     git = {

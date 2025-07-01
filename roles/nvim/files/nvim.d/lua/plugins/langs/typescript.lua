@@ -1,6 +1,6 @@
 return {
     {
-        'echasnovski/mini.icons',
+        'nvim-mini/mini.icons',
         opts = {
             file = {
                 ['.eslintrc.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
@@ -27,6 +27,7 @@ return {
     },
     {
         'neovim/nvim-lspconfig',
+        optional = true,
         opts = {
             -- make sure mason installs the server
             servers = {
@@ -127,9 +128,31 @@ return {
             setup = {
                 ts_ls = function()
                     -- disable ts_ls
-                    return true
+                    return false
                 end,
                 vtsls = function(_, opts)
+                    if vim.lsp.config.denols and vim.lsp.config.vtsls then
+                        ---@param server string
+                        local resolve = function(server)
+                            local markers, root_dir = vim.lsp.config[server].root_markers, vim.lsp.config[server].root_dir
+                            vim.lsp.config(server, {
+                                root_dir = function(bufnr, on_dir)
+                                    local is_deno = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' }) ~= nil
+                                    if is_deno == (server == 'denols') then
+                                        if root_dir then
+                                            return root_dir(bufnr, on_dir)
+                                        elseif type(markers) == 'table' then
+                                            local root = vim.fs.root(bufnr, markers)
+                                            return root and on_dir(root)
+                                        end
+                                    end
+                                end,
+                            })
+                        end
+
+                        resolve('denols')
+                        resolve('vtsls')
+                    end
                     GlobalUtils.lsp.on_attach(function(client, _)
                         client.commands['_typescript.moveToFileRefactoring'] = function(command, _)
                             ---@type string, string, lsp.Range

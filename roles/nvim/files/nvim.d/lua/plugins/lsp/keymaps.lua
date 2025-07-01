@@ -5,7 +5,7 @@ local function get()
         return _keys
     end
     _keys =  {
-        { '<leader>cl', '<cmd>LspInfo<cr>', desc = 'Lsp Info' },
+        { '<leader>cl', function() Snacks.picker.lsp_config() end, desc = 'Lsp Info' },
         { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition', has = 'definition' },
         { 'gr', vim.lsp.buf.references, desc = 'References', nowait = true },
         { 'gI', vim.lsp.buf.implementation, desc = 'Goto Implementation' },
@@ -20,8 +20,8 @@ local function get()
             mode = 'i',
             has = 'signatureHelp'
         },
-        { '<leader>ca', vim.lsp.buf.code_action, desc = 'Code Action', mode = { 'n', 'v' }, has = 'codeAction' },
-        { '<leader>cc', vim.lsp.codelens.run, desc = 'Run Codelens', mode = { 'n', 'v' }, has = 'codeLens' },
+        { '<leader>ca', vim.lsp.buf.code_action, desc = 'Code Action', mode = { 'n', 'x' }, has = 'codeAction' },
+        { '<leader>cc', vim.lsp.codelens.run, desc = 'Run Codelens', mode = { 'n', 'x' }, has = 'codeLens' },
         {
             '<leader>cC',
             vim.lsp.codelens.refresh,
@@ -58,7 +58,7 @@ local function has(buffer, method)
     local clients = GlobalUtils.lsp.get_clients({ bufnr = buffer })
 
     for _, client in ipairs(clients) do
-        if client.supports_method(method) then
+        if client:supports_method(method) then
             return true
         end
     end

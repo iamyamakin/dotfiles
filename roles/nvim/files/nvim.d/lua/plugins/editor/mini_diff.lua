@@ -1,5 +1,5 @@
 return {
-    'echasnovski/mini.diff',
+    'nvim-mini/mini.diff',
     version = '*',
     event = 'VeryLazy',
     opts = function()

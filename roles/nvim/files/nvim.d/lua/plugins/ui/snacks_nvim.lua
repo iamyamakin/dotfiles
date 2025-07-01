@@ -8,7 +8,7 @@ return {
     'folke/snacks.nvim',
     optional = true,
     opts = {
-        bigfile = { enabled = true },
+        bigfile = {},
         dashboard = {
             preset = {
                 pick = function(cmd, opts) return GlobalUtils.pick(cmd, opts)() end,
@@ -49,13 +49,17 @@ return {
                 },
             },
         },
-        indent = { enabled = true },
-        input = { enabled = true },
-        notifier = { enabled = true },
+        explorer = {},
+        gitbrowse = {},
+        image = {},
+        indent = {},
+        input = {},
+        notifier = {},
+        picker = {},
         profiler = { pick = { picker = 'fzf-lua' } },
-        quickfile = { enabled = true },
-        scope = { enabled = true },
-        scroll = { enabled = true },
+        quickfile = {},
+        scope = {},
+        scroll = {},
         terminal = {
             win = {
                 keys = {
@@ -67,7 +71,7 @@ return {
             },
         },
         toggle = { map = GlobalUtils.safe_keymap_set },
-        words = { enabled = true },
+        words = {},
     },
     keys = {
         { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer' },
@@ -86,12 +90,13 @@ return {
         },
         { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },
         { '<leader>gb', function() Snacks.picker.git_branches() end, desc = 'Git Branches' },
-        { '<leader>gB', function() Snacks.picker.gitbrowse() end, desc = 'Git Browse (open)', mode = { 'n', 'x' } },
+        { '<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse (open)', mode = { 'n', 'x' } },
         { '<leader>gl', function() Snacks.picker.git_log() end, desc = 'Git Log' },
         { '<leader>gL', function() Snacks.picker.git_log_line() end, desc = 'Git Log Line' },
         { '<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status' },
         { '<leader>gS', function() Snacks.picker.git_stash() end, desc = 'Git Stash' },
         { '<leader>gd', function() Snacks.picker.git_diff() end, desc = 'Git Diff (Hunks)' },
+        { '<leader>gD', function() Snacks.picker.git_diff({ base = "origin", group = true }) end, desc = 'Git Diff (Origin)' },
         { '<leader>gf', function() Snacks.picker.git_log_file() end, desc = 'Git Log File' },
     },
 }
