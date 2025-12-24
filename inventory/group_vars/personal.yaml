@@ -24,6 +24,7 @@ brew_packages:
     - ghostscript
     - git
     - git-delta
+    - gitleaks
     - gnupg
     - go
     - htop

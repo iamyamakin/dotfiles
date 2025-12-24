@@ -4,6 +4,8 @@ pre-commit:
   parallel: false
   piped: true
   commands:
+    gitleaks:
+      run: gitleaks protect {staged_files} -v
     lint:
       glob: '**/*.yaml'
       run: |
