@@ -21,6 +21,7 @@ brew_packages:
     - docker-compose
     - fd
     - fzf
+    - ghostscript
     - git
     - git-delta
     - gnupg
@@ -29,9 +30,11 @@ brew_packages:
     - imagemagick
     - iperf3
     - kubernetes-cli
+    - lazygit
     - lefthook
     - llama.cpp
     - luarocks
+    - mermaid-cli
     - minikube
     - n
     - neovim
@@ -42,8 +45,11 @@ brew_packages:
     - ripgrep
     - ruby
     - rust
+    - tectonic
     - tmux
     - tree
+    - tree-sitter
+    - tree-sitter-cli
     - vale
     - wget
     - zsh

@@ -26,8 +26,11 @@ return {
                 'diff',
                 'editorconfig',
                 'jq',
+                'norg',
                 'query',
                 'regex',
+                'svelte',
+                'typst',
             },
             incremental_selection = {
                 enable = true,

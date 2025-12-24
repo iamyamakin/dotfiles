@@ -98,7 +98,6 @@ return {
                             ['gif'] = img_previewer,
                             ['webp'] = img_previewer,
                         },
-                        ueberzug_scaler = 'fit_contain',
                     },
                 },
                 files = {

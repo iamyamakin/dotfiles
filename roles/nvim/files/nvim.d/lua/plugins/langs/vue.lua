@@ -14,7 +14,6 @@ return {
         optional = true,
         opts = {
             servers = {
-                vuels = {},
                 volar = {
                     init_options = {
                         vue = {

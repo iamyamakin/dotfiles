@@ -43,29 +43,8 @@ return {
         },
     },
     config = function(_, opts)
-        local previous_node_client = { id = nil, length = nil }
-
         GlobalUtils.format.register(GlobalUtils.lsp.formatter())
         GlobalUtils.lsp.on_attach(function(client, buffer)
-            if (client.name == 'denols' or client.name == 'vtsls') then
-                if previous_node_client.id == nil then
-                    previous_node_client.id = client.id
-                    previous_node_client.length = #client.root_dir
-                else
-                    if previous_node_client.length < #client.root_dir then
-                        vim.lsp.stop_client(previous_node_client.id, true)
-                    elseif previous_node_client.length > #client.root_dir then
-                        vim.lsp.stop_client(client.id, true)
-                    else
-                        if client.name == 'denols' then
-                            vim.lsp.stop_client(client.id, true)
-                        else
-                            vim.lsp.stop_client(previous_node_client.id, true)
-                        end
-                    end
-                    previous_node_client = { id = nil, length = nil }
-                end
-            end
             require('plugins.lsp.keymaps').on_attach(client, buffer)
         end)
         GlobalUtils.lsp.setup()
