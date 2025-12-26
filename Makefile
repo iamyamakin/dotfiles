@@ -62,7 +62,7 @@ $(XDG_DIRS):
 $(XDG_DATA_DIRS_SEPARATED):
 	sudo mkdir -p $@
 
-.PHONE: xcode-install
+.PHONY: xcode-install
 xcode-install: xdg-dirs
 ifeq ($(UNAME_S), Darwin)
 	@echo "$(tty_blue)---$(tty_reset) $(tty_bold)Checking Xcode installation...$(tty_reset)"
