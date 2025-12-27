@@ -38,7 +38,8 @@ vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
 
 vim.keymap.set({ 'n', 'x' }, '<leader>cf', function() GlobalUtils.format({ force = true }) end, { desc = 'Format' })
 
-vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
+vim.keymap.set('n', '<leader>qq', '<cmd>qa!<cr>', { desc = 'Quit All' })
+vim.keymap.set('n', '<leader>qQ', '<cmd>wqa<cr>', { desc = 'Save All and Quit' })
 
 Snacks.toggle.option('list', { name = 'Listchars' }):map('<leader>uL')
 Snacks.toggle.option('spell', { name = 'Spelling' }):map('<leader>us')

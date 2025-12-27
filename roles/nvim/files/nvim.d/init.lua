@@ -39,7 +39,7 @@ if not is_argc_empty  then
 end
 
 vim.api.nvim_create_autocmd('User', {
-    group = vim.api.nvim_create_augroup('', { clear = true }),
+    group = vim.api.nvim_create_augroup('LazyVimStartup', { clear = true }),
     pattern = 'VeryLazy',
     callback = function()
         if is_argc_empty then

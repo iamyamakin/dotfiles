@@ -178,10 +178,10 @@ local function toggle_client(name)
         found = true
         client:stop(true)
         vim.notify(client.name .. ': stopped')
-        -- vim.lsp.stop_client(client.id, true)
     end
     if not found then
-        -- vim.lsp.start(vim.lsp.config[name])
+        vim.lsp.start(vim.lsp.config[name])
+        vim.notify(name .. ': started')
     end
 end
 
