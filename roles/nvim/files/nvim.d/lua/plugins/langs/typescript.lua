@@ -1,21 +1,5 @@
 return {
     {
-        'nvim-mini/mini.icons',
-        opts = {
-            file = {
-                ['.eslintrc.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
-                ['.node-version'] = { glyph = '', hl = 'MiniIconsGreen' },
-                ['.prettierrc'] = { glyph = '', hl = 'MiniIconsPurple' },
-                ['.yarnrc.yml'] = { glyph = '', hl = 'MiniIconsBlue' },
-                ['eslint.config.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
-                ['package.json'] = { glyph = '', hl = 'MiniIconsGreen' },
-                ['tsconfig.json'] = { glyph = '', hl = 'MiniIconsAzure' },
-                ['tsconfig.build.json'] = { glyph = '', hl = 'MiniIconsAzure' },
-                ['yarn.lock'] = { glyph = '', hl = 'MiniIconsBlue' },
-            },
-        },
-    },
-    {
         'mason-org/mason.nvim',
         optional = true,
         opts = {
@@ -29,14 +13,40 @@ return {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = {
-            -- make sure mason installs the server
             servers = {
+                denols = {
+                    root_dir = function(fname)
+                        return require('lspconfig.util').root_pattern('deno.json', 'deno.jsonc')(fname)
+                    end,
+                    settings = {
+                        deno = {
+                            enable = true,
+                            lint = true,
+                            unstable = true,
+                            suggest = {
+                                imports = {
+                                    hosts = {
+                                        ['https://deno.land'] = true,
+                                        ['https://cdn.nest.land'] = true,
+                                        ['https://crux.land'] = true,
+                                    },
+                                },
+                            },
+                            inlayHints = {
+                                parameterNames = { enabled = 'all' },
+                                parameterTypes = { enabled = true },
+                                variableTypes = { enabled = true },
+                                propertyDeclarationTypes = { enabled = true },
+                                functionLikeReturnTypes = { enabled = true },
+                                enumMemberValues = { enabled = true },
+                            },
+                        },
+                    },
+                },
                 ts_ls = {
                     enabled = false,
                 },
                 vtsls = {
-                    -- explicitly add default filetypes, so that we can extend
-                    -- them in related extras
                     filetypes = {
                         'javascript',
                         'javascriptreact',
@@ -126,18 +136,17 @@ return {
                 },
             },
             setup = {
-                ts_ls = function()
-                    -- disable ts_ls
-                    return false
-                end,
+                ts_ls = function() return false end,
                 vtsls = function(_, opts)
                     if vim.lsp.config.denols and vim.lsp.config.vtsls then
-                        ---@param server string
                         local resolve = function(server)
-                            local markers, root_dir = vim.lsp.config[server].root_markers, vim.lsp.config[server].root_dir
+                            local markers, root_dir =
+                                vim.lsp.config[server].root_markers, vim.lsp.config[server].root_dir
+
                             vim.lsp.config(server, {
                                 root_dir = function(bufnr, on_dir)
                                     local is_deno = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' }) ~= nil
+
                                     if is_deno == (server == 'denols') then
                                         if root_dir then
                                             return root_dir(bufnr, on_dir)
@@ -155,7 +164,6 @@ return {
                     end
                     GlobalUtils.lsp.on_attach(function(client, _)
                         client.commands['_typescript.moveToFileRefactoring'] = function(command, _)
-                            ---@type string, string, lsp.Range
                             local action, uri, range = unpack(command.arguments)
                             local function move(newf)
                                 client.request('workspace/executeCommand', {
@@ -178,7 +186,6 @@ return {
                                     },
                                 },
                             }, function(_, result)
-                                ---@type string[]
                                 local files = result.body.files
 
                                 table.insert(files, 1, 'Enter new path...')
@@ -201,7 +208,6 @@ return {
                             end)
                         end
                     end, 'vtsls')
-                    -- copy typescript settings to javascript
                     opts.settings.javascript =
                         vim.tbl_deep_extend('force', {}, opts.settings.typescript, opts.settings.javascript or {})
                 end,
@@ -225,6 +231,145 @@ return {
             ensure_installed = {
                 'tsx',
                 'typescript',
+            },
+        },
+    },
+    {
+        'mfussenegger/nvim-dap',
+        optional = true,
+        dependencies = {
+            {
+                'mason-org/mason.nvim',
+                opts = function(_, opts)
+                    opts.ensure_installed = opts.ensure_installed or {}
+                    table.insert(opts.ensure_installed, 'js-debug-adapter')
+                end,
+            },
+        },
+        opts = function()
+            local dap = require('dap')
+
+            for _, adapterType in ipairs({ 'node', 'chrome', 'msedge' }) do
+                local pwaType = 'pwa-' .. adapterType
+
+                if not dap.adapters[pwaType] then
+                    dap.adapters[pwaType] = {
+                        type = 'server',
+                        host = 'localhost',
+                        port = '${port}',
+                        executable = {
+                            command = 'js-debug-adapter',
+                            args = { '${port}' },
+                        },
+                    }
+                end
+
+                if not dap.adapters[adapterType] then
+                    dap.adapters[adapterType] = function(cb, config)
+                        local nativeAdapter = dap.adapters[pwaType]
+
+                        config.type = pwaType
+
+                        if type(nativeAdapter) == 'function' then
+                            nativeAdapter(cb, config)
+                        else
+                            cb(nativeAdapter)
+                        end
+                    end
+                end
+            end
+
+            local js_filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
+            local vscode = require('dap.ext.vscode')
+
+            vscode.type_to_filetypes['node'] = js_filetypes
+            vscode.type_to_filetypes['pwa-node'] = js_filetypes
+
+            for _, language in ipairs(js_filetypes) do
+                if not dap.configurations[language] then
+                    local runtimeExecutable = nil
+
+                    if language:find('typescript') then
+                        runtimeExecutable = vim.fn.executable('tsx') == 1 and 'tsx' or 'ts-node'
+                    end
+                    dap.configurations[language] = {
+                        {
+                            type = 'pwa-node',
+                            request = 'launch',
+                            name = 'Launch Node.js file',
+                            program = '${file}',
+                            cwd = '${workspaceFolder}',
+                            sourceMaps = true,
+                            runtimeExecutable = runtimeExecutable,
+                            skipFiles = {
+                                '<node_internals>/**',
+                                'node_modules/**',
+                            },
+                            resolveSourceMapLocations = {
+                                '${workspaceFolder}/**',
+                                '!**/node_modules/**',
+                            },
+                        },
+                        {
+                            type = 'pwa-node',
+                            request = 'attach',
+                            name = 'Attach to Node.js',
+                            processId = require('dap.utils').pick_process,
+                            cwd = '${workspaceFolder}',
+                            sourceMaps = true,
+                            runtimeExecutable = runtimeExecutable,
+                            skipFiles = {
+                                '<node_internals>/**',
+                                'node_modules/**',
+                            },
+                            resolveSourceMapLocations = {
+                                '${workspaceFolder}/**',
+                                '!**/node_modules/**',
+                            },
+                        },
+                        {
+                            type = 'pwa-node',
+                            request = 'launch',
+                            name = 'Launch Deno file',
+                            program = '${file}',
+                            cwd = '${workspaceFolder}',
+                            runtimeExecutable = 'deno',
+                            runtimeArgs = { 'run', '--inspect-brk', '--allow-all' },
+                            attachSimplePort = 9229,
+                        },
+                        {
+                            type = 'pwa-node',
+                            request = 'attach',
+                            name = 'Attach to Deno',
+                            cwd = '${workspaceFolder}',
+                            attachSimplePort = 9229,
+                        },
+                    }
+                end
+            end
+        end,
+    },
+
+    {
+        'jay-babu/mason-nvim-dap.nvim',
+        optional = true,
+        opts = {
+            automatic_installation = { exclude = { 'chrome' } },
+        },
+    },
+    {
+        'nvim-mini/mini.icons',
+        opts = {
+            file = {
+                ['.eslintrc.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
+                ['.node-version'] = { glyph = '', hl = 'MiniIconsGreen' },
+                ['.prettierrc'] = { glyph = '', hl = 'MiniIconsPurple' },
+                ['.yarnrc.yml'] = { glyph = '', hl = 'MiniIconsBlue' },
+                ['eslint.config.js'] = { glyph = '󰱺', hl = 'MiniIconsYellow' },
+                ['package.json'] = { glyph = '', hl = 'MiniIconsGreen' },
+                ['tsconfig.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+                ['tsconfig.build.json'] = { glyph = '', hl = 'MiniIconsAzure' },
+                ['yarn.lock'] = { glyph = '', hl = 'MiniIconsBlue' },
             },
         },
     },

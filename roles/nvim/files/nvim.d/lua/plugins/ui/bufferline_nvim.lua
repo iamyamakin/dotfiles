@@ -34,7 +34,7 @@ return {
         { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
         { '<leader>bo', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },
         { '<leader>bD', '<cmd>:bd<cr>', desc = 'Delete Buffer and Window' },
-        { '<leader>bp', '<cmd>BufferLineTogglePin<cr>', desc = 'Toggle Pin' },
+        { '<leader>bp', '<cmd>BufferLineTogglePin<cr>', desc = 'Pin' },
         { '<leader>bP', '<cmd>BufferLineGroupClose ungrouped<cr>', desc = 'Delete Non-Pinned Buffers' },
         { '<leader>br', '<cmd>BufferLineCloseRight<cr>', desc = 'Delete Buffers to the Right' },
         { '<leader>bl', '<cmd>BufferLineCloseLeft<cr>', desc = 'Delete Buffers to the Left' },
@@ -50,7 +50,6 @@ return {
         vim.api.nvim_create_autocmd({ 'BufAdd', 'BufDelete' }, {
             callback = function()
                 vim.schedule(function()
-                    -- luacheck: globals nvim_bufferline
                     pcall(nvim_bufferline)
                 end)
             end,

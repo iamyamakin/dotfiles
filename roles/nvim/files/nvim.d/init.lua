@@ -62,6 +62,7 @@ require('lazy').setup({
         { import = 'plugins.lsp.nvim_lspconfig' },
         { import = 'plugins.treesitter' },
         { import = 'plugins.langs' },
+        { import = 'plugins.dap' },
         { import = 'plugins.ui' },
         { import = 'plugins.misc' },
         { import = 'plugins.ai' },

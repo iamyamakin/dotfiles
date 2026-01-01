@@ -6,6 +6,9 @@ return {
             ensure_installed = {
                 'goimports',
                 'gofumpt',
+                'golangci-lint',
+                'gomodifytags',
+                'impl',
             },
         },
     },
@@ -50,6 +53,51 @@ return {
                             usePlaceholders = true,
                         },
                     },
+                    keys = {
+                        {
+                            '<leader>cgt',
+                            function()
+                                vim.ui.input({ prompt = 'Add tags: ' }, function(input)
+                                    if input then
+                                        vim.cmd('silent !gomodifytags -add-tags ' .. input .. ' -file %')
+                                        vim.cmd('edit')
+                                    end
+                                end)
+                            end,
+                            desc = 'Add struct tags',
+                            ft = 'go',
+                        },
+                        {
+                            '<leader>cgT',
+                            function()
+                                vim.ui.input({ prompt = 'Remove tags: ' }, function(input)
+                                    if input then
+                                        vim.cmd('silent !gomodifytags -remove-tags ' .. input .. ' -file %')
+                                        vim.cmd('edit')
+                                    end
+                                end)
+                            end,
+                            desc = 'Remove struct tags',
+                            ft = 'go',
+                        },
+                        {
+                            '<leader>cgi',
+                            function()
+                                vim.ui.input({ prompt = 'Interface to implement: ' }, function(iface)
+                                    if iface then
+                                        vim.ui.input({ prompt = 'Receiver name: ' }, function(recv)
+                                            if recv then
+                                                local cmd = string.format('impl "%s" %s', recv, iface)
+                                                vim.fn.execute('r!' .. cmd)
+                                            end
+                                        end)
+                                    end
+                                end)
+                            end,
+                            desc = 'Implement interface',
+                            ft = 'go',
+                        },
+                    },
                 },
             },
             setup = {
@@ -69,6 +117,15 @@ return {
                         end
                     end, 'gopls')
                 end,
+            },
+        },
+    },
+    {
+        'mfussenegger/nvim-lint',
+        optional = true,
+        opts = {
+            linters_by_ft = {
+                go = { 'golangcilint' },
             },
         },
     },
