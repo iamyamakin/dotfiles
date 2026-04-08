@@ -17,6 +17,13 @@ return {
         init = function(plugin)
             require('lazy.core.loader').add_to_rtp(plugin)
             require('nvim-treesitter.query_predicates')
+            -- Neovim 0.12 compat: guard against detached/invalid TSNodes in get_node_text
+            local orig_get_node_text = vim.treesitter.get_node_text
+            vim.treesitter.get_node_text = function(node, source, opts)
+                if node == nil then return '' end
+                local ok, result = pcall(orig_get_node_text, node, source, opts)
+                return ok and result or ''
+            end
         end,
         opts = {
             highlight = { enable = true },

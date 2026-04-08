@@ -61,6 +61,7 @@ return {
         scope = {},
         scroll = {},
         terminal = {
+            bo = { buflisted = false },
             win = {
                 keys = {
                     nav_h = { '<c-h>', term_nav('h'), desc = 'Go to Left Window', expr = true, mode = 't' },
