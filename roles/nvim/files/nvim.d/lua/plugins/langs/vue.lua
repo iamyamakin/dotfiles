@@ -14,14 +14,24 @@ return {
         optional = true,
         opts = {
             servers = {
-                volar = {
+                vue_ls = {
+                    root_dir = function(fname)
+                        return require('lspconfig.util').root_pattern(
+                            'vue.config.js',
+                            'vue.config.ts',
+                            'nuxt.config.js',
+                            'nuxt.config.ts'
+                        )(fname)
+                    end,
                     init_options = {
                         vue = {
                             hybridMode = true,
                         },
                     },
                 },
-                vtsls = {},
+                vtsls = {
+                    filetypes = { 'vue' },
+                },
             },
         },
     },

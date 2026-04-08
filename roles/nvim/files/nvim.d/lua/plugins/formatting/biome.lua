@@ -11,6 +11,19 @@ return {
         },
     },
     {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = {
+            servers = {
+                biome = {
+                    root_dir = function(fname)
+                        return require('lspconfig.util').root_pattern('biome.json', 'biome.jsonc')(fname)
+                    end,
+                },
+            },
+        },
+    },
+    {
         'stevearc/conform.nvim',
         optional = true,
         opts = function(_, opts)
