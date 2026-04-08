@@ -6,7 +6,7 @@ brew_packages:
     - font-hack-nerd-font
     - google-chrome
     - kitty
-    - rar
+    - keka
     - slack
     - telegram
     - vlc
@@ -39,7 +39,9 @@ brew_packages:
     - minikube
     - n
     - neovim
+    - ngrok
     - nmap
+    - postgresql
     - prometheus
     - pure
     - python@3.13
